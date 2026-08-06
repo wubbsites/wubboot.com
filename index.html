@@ -60,11 +60,13 @@
     <div class="video-container">
         <!-- 
           - autoplay: starts playing automatically
+          - muted: required by modern browsers to allow autoplay with sound fallback
+          - loop: loops the video continuously with sound
           - playsinline: ensures smooth playback on mobile devices
           - oncontextmenu="return false": extra safeguard against right-clicking
         -->
-        <video id="bg-video" autoplay playsinline oncontextmenu="return false;">
-            <source src="videos/WC.mp4" type="video/mp4">
+        <video id="bg-video" autoplay muted loop playsinline oncontextmenu="return false;">
+            <source src="video/WC.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="overlay-text">Coming soon!</div>
@@ -73,22 +75,12 @@
     <script>
         const video = document.getElementById('bg-video');
 
-        // Play with sound on initial load
+        // Attempt to play with sound immediately on load
         video.muted = false;
         video.play().catch(() => {
-            // Fallback for browsers that block autoplay with sound
+            // Fallback for browsers that block autoplay with sound: keep it muted and play
             video.muted = true;
             video.play();
-        });
-
-        // Once the first playthrough ends, mute it and loop continuously
-        video.addEventListener('ended', function() {
-            video.muted = true;
-            video.currentTime = 0;
-            video.play();
-            
-            // Switch to standard looping for all subsequent plays
-            video.loop = true;
         });
     </script>
 </body>
