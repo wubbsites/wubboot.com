@@ -3,28 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wow! Wow! Wubbzy!: Fan-Revival!</title>
+    <title>Coming Soon</title>
     <style>
-        body {
+        @font-face {
+            font-family: 'Valken';
+            src: url('Valken.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
         }
-        h1 {
-            font-size: 3rem;
-            font-weight: 500;
-            letter-spacing: -0.025em;
-            margin: 0;
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Ensures the video covers the entire screen while maintaining aspect ratio */
+            pointer-events: none; /* Prevents right-click and interaction */
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Valken', sans-serif;
+            font-size: 5rem;
+            color: #ffffff;
+            mix-blend-mode: difference; /* Mimics Photoshop Difference blend mode */
+            user-select: none;
+            pointer-events: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
-    <h1>Coming soon.</h1>
+    <div class="video-container">
+        <!-- 
+          - muted: mutes the video
+          - autoplay: starts playing automatically
+          - loop: loops the video continuously
+          - playsinline: ensures smooth playback on mobile devices
+          - oncontextmenu="return false": disables right-clicking on the video element
+        -->
+        <video autoplay muted loop playsinline oncontextmenu="return false;">
+            <source src="WC.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay-text">Coming soon!</div>
+    </div>
 </body>
 </html>
