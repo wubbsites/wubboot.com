@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wubboot.com</title>
+    <title>Coming soon!</title>
     <style>
         @font-face {
             font-family: 'Valken';
@@ -37,8 +37,8 @@
             transform: translate(-50%, -50%);
             width: 100vw;
             height: 100vh;
-            object-fit: cover; /* Ensures the video covers the entire screen while maintaining aspect ratio */
-            pointer-events: none; /* Prevents right-click and interaction */
+            object-fit: cover;
+            pointer-events: none; /* Prevents right-click and interaction on the video itself */
         }
 
         .overlay-text {
@@ -49,27 +49,47 @@
             font-family: 'Valken', sans-serif;
             font-size: 5rem;
             color: #ffffff;
-            mix-blend-mode: difference; /* Mimics Photoshop Difference blend mode */
+            mix-blend-mode: difference;
             user-select: none;
             pointer-events: none;
             z-index: 10;
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="video-container">
         <!-- 
-          - muted: mutes the video
           - autoplay: starts playing automatically
-          - loop: loops the video continuously
           - playsinline: ensures smooth playback on mobile devices
-          - oncontextmenu="return false": disables right-clicking on the video element
+          - oncontextmenu="return false": extra safeguard against right-clicking
         -->
-        <video autoplay muted loop playsinline oncontextmenu="return false;">
-            <source src="WC.mp4" type="video/mp4">
+        <video id="bg-video" autoplay playsinline oncontextmenu="return false;">
+            <source src="The Wubb Club being built.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="overlay-text">Coming soon!</div>
     </div>
+
+    <script>
+        const video = document.getElementById('bg-video');
+
+        // Play with sound on initial load
+        video.muted = false;
+        video.play().catch(() => {
+            // Fallback for browsers that block autoplay with sound
+            video.muted = true;
+            video.play();
+        });
+
+        // Once the first playthrough ends, mute it and loop continuously
+        video.addEventListener('ended', function() {
+            video.muted = true;
+            video.currentTime = 0;
+            video.play();
+            
+            // Switch to standard looping for all subsequent plays
+            video.loop = true;
+        });
+    </script>
 </body>
 </html>
